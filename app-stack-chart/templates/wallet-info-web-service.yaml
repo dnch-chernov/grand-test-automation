@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.frontendUrl }}
+  labels:
+    app: wallet-info-web
+spec:
+  selector:
+    app: wallet-info-web
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

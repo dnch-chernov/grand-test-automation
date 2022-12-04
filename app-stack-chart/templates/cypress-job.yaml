@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cypress
+spec:
+  template:
+    spec:
+      containers:
+      - name: cypress
+        image: {{ .Values.cypressImage }}
+        env:
+          - name: CYPRESS_BASE_URL
+            value: {{ .Values.frontendProtocol }}://{{ .Values.frontendUrl }}
+      restartPolicy: Never
+  backoffLimit: 0

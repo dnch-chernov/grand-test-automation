@@ -1,0 +1,4 @@
+frontendUrl: walletinfo
+frontendProtocol: http
+frontendImage: wallet-info-web:421dbc5
+cypressImage: cypress-tests:0.1.0

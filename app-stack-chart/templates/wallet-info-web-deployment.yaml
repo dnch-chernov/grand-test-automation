@@ -1,0 +1,26 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: wallet-info-web-deployment
+  labels:
+    app: wallet-info-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wallet-info-web
+  template:
+    metadata:
+      labels:
+        app: wallet-info-web
+    spec:
+      containers:
+      - name: nginx
+        image: wallet-info-web:421dbc5
+        ports:
+        - containerPort: 80
+        readinessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /
+            port: 80
