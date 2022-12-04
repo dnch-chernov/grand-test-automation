@@ -33,5 +33,10 @@ jobs:
       
       - run: helm install --wait app-stack app-stack-chart
       - run: kubectl wait --for=condition=complete --timeout=30s job/cypress
+      
+      - name: Job logs
+        if: ${{ failure() }}
+        run: kubectl logs job/cypress
+
       - run: helm uninstall app-stack
         
