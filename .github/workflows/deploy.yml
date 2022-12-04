@@ -32,10 +32,10 @@ jobs:
         uses: helm/kind-action@v1.4.0
       
       - run: helm install --wait app-stack app-stack-chart
-      - run: kubectl wait --for=condition=complete --timeout=30s job/cypress
+      - run: kubectl wait --for=condition=complete --timeout=60s job/cypress
       
       - name: Job logs
-        if: ${{ failure() }}
+        if: ${{ always() }}
         run: kubectl logs job/cypress
 
       - run: helm uninstall app-stack
