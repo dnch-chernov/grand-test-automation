@@ -31,7 +31,7 @@ jobs:
       - name: Create kind cluster
         uses: helm/kind-action@v1.4.0
       
-      - run: helm install app-stackapp-stack-chart
+      - run: helm install app-stack app-stack-chart
       - run: wait --for=condition=complete --timeout=30s job/cypress
       - run: helm uninstall app-stack
         

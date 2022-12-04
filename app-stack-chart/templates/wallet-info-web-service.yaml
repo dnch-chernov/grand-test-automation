@@ -3,10 +3,10 @@ apiVersion: v1
 metadata:
   name: {{ .Values.frontendUrl }}
   labels:
-    app: wallet-info-web
+    app: {{ .Values.frontendAppName }}
 spec:
   selector:
-    app: wallet-info-web
+    app: {{ .Values.frontendAppName }}
   ports:
     - protocol: TCP
       port: 80

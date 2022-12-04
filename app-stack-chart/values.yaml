@@ -1,4 +1,5 @@
 frontendUrl: walletinfo
 frontendProtocol: http
-frontendImage: wallet-info-web:421dbc5
-cypressImage: cypress-tests:0.1.0
+frontendImage: ghcr.io/dnch-chernov/wallet-info-web:main
+frontendAppName: wallet-info-web
+cypressImage: ghcr.io/dnch-chernov/wallet-info-tests:main
