@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  wallet-info-web:
+    image: "wallet-info-web:421dbc5"
+    ports:
+      - "8888:80"
+  cypress:
+    image: cypress-tests:0.2.0
+    environment:
+      - "CYPRESS_BASE_URL=http://wallet-info-web"
+    volumes:
+      - C:\Users\ms\Documents\grand-test-automation\tests\cypress-tests:/e2e

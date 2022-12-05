@@ -6,6 +6,7 @@ on:
     branches: [ "main" ]
   repository_dispatch:
     types: [frontend-test]
+  workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
