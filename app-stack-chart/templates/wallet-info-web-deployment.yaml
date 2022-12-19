@@ -19,8 +19,8 @@ spec:
           image:  {{ .Values.frontendImage }}
           ports:
             - containerPort: 80
-              readinessProbe:
-                httpGet:
-                  scheme: HTTP
-                  path: /
-                  port: 80
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /
+              port: 80

@@ -38,8 +38,8 @@ jobs:
 
       - run: helm install --wait app-stack app-stack-chart
       - run: kubectl wait --namespace ingress-nginx --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=90s
-      - run: curl localost
-      - run: curl localost/api/status
+      - run: curl localhost
+      - run: curl localhost/api/status
       - run: docker run --name cypress-tests -e CYPRESS_BASE_URL="http://host.docker.internal" ${{ env.REGISTRY }}/dnch-chernov/wallet-info-tests:main
 
       - name: Job logs
