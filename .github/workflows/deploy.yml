@@ -36,7 +36,7 @@ jobs:
           config: kind-cluster-config.yaml
           cluster_name: default
 
-      - run: helm install --wait app-stack app-stack-chart
+      - run: helm install --wait --set providerUrl=${{ secrets.PROVIDER_URL }} --set usdcContractAddress=${{ secrets.USDC_CONTRACT_ADDRESS }} app-stack app-stack-chart
       - run: kubectl wait --namespace ingress-nginx --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=90s
       - run: curl localhost
       - run: curl localhost/api/status

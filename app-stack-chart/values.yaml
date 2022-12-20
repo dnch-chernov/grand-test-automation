@@ -6,3 +6,5 @@ frontendAppName: wallet-info-web
 backendImage: ghcr.io/dnch-chernov/wallet-info-backend:main
 backendAppName: wallet-info-backend
 cypressImage: ghcr.io/dnch-chernov/wallet-info-tests:main
+providerUrl: "http://localhost:8545"
+usdcContractAddress: "0x07865c6e87b9f70255377e024ace6630c1eaa37f"
