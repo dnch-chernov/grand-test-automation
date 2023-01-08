@@ -76,4 +76,4 @@ jobs:
 
       - name: Job logs
         if: ${{ always() }}
-        run: docker logs cypress-tests
+        run: docker logs api-tests
