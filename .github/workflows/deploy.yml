@@ -12,7 +12,39 @@ env:
   REGISTRY: ghcr.io
 
 jobs:
-  deploy_and_test:
+  ui-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.10.0
+
+      - name: Create kind cluster
+        uses: helm/kind-action@v1.4.0
+        with:
+          config: kind-cluster-config.yaml
+          cluster_name: default
+
+      - run: helm install --wait --set providerUrl=${{ secrets.PROVIDER_URL }} --set usdcContractAddress=${{ secrets.USDC_CONTRACT_ADDRESS }} app-stack app-stack-chart
+      - run: kubectl wait --namespace ingress-nginx --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=90s
+      - run: docker run --name cypress-tests --add-host=host.docker.internal:host-gateway -e CYPRESS_BASE_URL="http://host.docker.internal" ${{ env.REGISTRY }}/dnch-chernov/wallet-info-tests-cypress:main
+
+      - name: Job logs
+        if: ${{ always() }}
+        run: docker logs cypress-tests
+
+  api-tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -40,7 +72,7 @@ jobs:
       - run: kubectl wait --namespace ingress-nginx --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=90s
       - run: curl localhost
       - run: curl localhost/api/status
-      - run: docker run --name cypress-tests --add-host=host.docker.internal:host-gateway -e CYPRESS_BASE_URL="http://host.docker.internal" ${{ env.REGISTRY }}/dnch-chernov/wallet-info-tests:main
+      - run: docker run --name api-tests --add-host=host.docker.internal:host-gateway -e BACKEND_URL="http://host.docker.internal" ${{ env.REGISTRY }}/dnch-chernov/wallet-info-tests-pytest:main
 
       - name: Job logs
         if: ${{ always() }}
