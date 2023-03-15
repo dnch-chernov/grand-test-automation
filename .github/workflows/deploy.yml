@@ -13,6 +13,7 @@ env:
 
 jobs:
   ui-tests:
+    if: inputs.type == 'all' || inputs.type == 'ui'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -45,6 +46,7 @@ jobs:
         run: docker logs cypress-tests
 
   api-tests:
+    if: inputs.type == 'all' || inputs.type == 'api'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
