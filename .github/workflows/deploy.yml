@@ -4,16 +4,25 @@ on:
     branches: ["main"]
   pull_request:
     branches: ["main"]
-  repository_dispatch:
-    types: [frontend-test]
   workflow_dispatch:
+    inputs:
+      testType:
+        description: 'Test types'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+        - all
+        - ui
+        - api
+        
 
 env:
   REGISTRY: ghcr.io
 
 jobs:
   ui-tests:
-    if: inputs.type == 'all' || inputs.type == 'ui'
+    if: inputs.testType == 'all' || inputs.testType == 'ui'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -46,7 +55,7 @@ jobs:
         run: docker logs cypress-tests
 
   api-tests:
-    if: inputs.type == 'all' || inputs.type == 'api'
+    if: inputs.testType == 'all' || inputs.testType == 'api'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
